@@ -1,5 +1,4 @@
-python==3.11.5
-streamlit==0.89.0
-pandas==2.0.3
-snowflake-connector-python==3.7.0
-streamlit_option_menu==0.3.12
+streamlit
+pandas
+snowflake-connector-python
+streamlit_option_menu
