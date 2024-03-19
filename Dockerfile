@@ -2,7 +2,7 @@
 
 FROM python:3.8-slim
 
-WORKDIR /app
+# WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN git clone https://github.com/Zaibaiqbal/Snowflake-app.git
 
+RUN pip install --upgrade pip
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8501
