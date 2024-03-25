@@ -1,51 +1,42 @@
-
-
-def render_navbar():
-# Navbar
+def generate_header_html():
     nav_items = {
         "Partners": "/Partners",
-        "shared": "/shared",
-        "operations": "/operations",
+        "Shared": "/shared",
+        "Operations": "/operations",
         "Account": "/Account",
         "Message": "/Message",
-        "profile": "/profile",
+        "Profile": "/profile",
     }
 
-# Generate HTML links for navbar items
-    nav_links = ''.join(f'<a href="{url}">{label}</a>' for label, url in nav_items.items())
+    # Generate HTML links for navbar items
+    nav_links = ''.join(f'<a href="{url}" style="color: purple; margin: 0 10px;">{label}</a>' for label, url in nav_items.items())
 
     navbar_template = f"""
         <style>
             .navbar {{
-                background-color:#74A7C3;
                 display: flex;
-                align-items: center;
-                width: 60%; 
-                height:10%;
+                justify-content: center;
+                align-items: right;
+                width: 100%;
+                padding: 10px 0;
                 margin: 0;
-                position: fixed; 
-                top: 39px; 
-            
+                position: fixed;
+                top: 25;
+                left: 110px;
+                right: 0;
+                z-index: 999;
+                background-color: none; 
             }}
 
             .navbar a {{
-                color: #fffff;
-                text-align: center;
+                color: purple; 
                 text-decoration: none;
                 font-size: 17px;
-                padding: 14px 20px;
-            
-            }}
-
-            .navbar a:hover {{
-                background-color: #ddd;
-                color: black;
+                padding: 10px 30px; 
             }}
         </style>
         <div class="navbar">
             {nav_links}
         </div>
     """
-
     return navbar_template
-

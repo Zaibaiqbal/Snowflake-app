@@ -3,8 +3,14 @@ import snowflake.connector as sf
 import streamlit as st
 import pandas as pd
 import os
+import numpy as np
+import pydeck as pdk
 from PIL import Image
 from tempfile import NamedTemporaryFile
+from footer import generate_footer_html
+from navbar import generate_header_html
+from streamlit.components.v1 import components
+import json
 
 
 conn_param = {
@@ -57,83 +63,58 @@ cursor.execute("USE SCHEMA APP;")
 with st.sidebar:
     st.image("./unnamed.png", width=300)
 
-    nav_items = {
-        "Partners": "/Partners",
-        "shared": "/shared",
-        "operations": "/operations",
-        "Account": "/Account",
-        "Message": "/Message",
-        "profile": "/profile",
-    }
 
-# Generate HTML links for navbar items
-    nav_links = ''.join(f'<a href="{url}">{label}</a>' for label, url in nav_items.items())
-
-    navbar_template = f"""
-        <style>
-            .navbar {{
-                background-color:#74A7C3;
-                display: flex;
-                align-items: center;
-                width: 60%; 
-                height:10%;
-                margin: 0;
-                position: fixed; 
-                top: 39px; 
-            
-            }}
-
-            .navbar a {{
-                color: #fffff;
-                text-align: center;
-                text-decoration: none;
-                font-size: 17px;
-                padding: 14px 20px;
-            
-            }}
-
-            .navbar a:hover {{
-                background-color: #ddd;
-                color: black;
-            }}
-        </style>
-        <div class="navbar">
-            {nav_links}
-        </div>
-    """
- 
-
-st.markdown(navbar_template, unsafe_allow_html=True)
+header_html = generate_header_html()
+st.markdown(header_html, unsafe_allow_html=True)
 
 
-footer = """<style>
-a:link , a:visited{
-color: blue;
-background-color: transparent;
-text-decoration: underline;
-text- align: center;
-}
+st.write("")
+st.write("")
 
-a:hover,  a:active {
-color: red;
-background-color: transparent;
-text-decoration: underline;
-}
+# Create the map using pydeck
 
-.footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: #74a7c3;
-color: white;
-text-align: center;
-}
-</style>
-<div class="footer">
-<p>Powered by <a style="color:white" href="https://www.snowflake.com/en/" target="_blank">Snowflake</a></p>
-</div>
-"""
-st.markdown(footer, unsafe_allow_html=True)
+st.pydeck_chart(pdk.Deck(
+    map_style="mapbox://styles/mapbox/light-v9",
+    initial_view_state=pdk.ViewState(
+        latitude=37.7749,
+        longitude=-122.4194,
+        zoom=10,
+        pitch=50,
+    )
+), use_container_width=True)
+
+footer_html = generate_footer_html()
+st.markdown(footer_html, unsafe_allow_html=True)
+# footer = """<style>
+# a:link , a:visited{
+# color: blue;
+# background-color: transparent;
+# text-decoration: underline;
+# text- align: center;
+# }
+
+# a:hover,  a:active {
+# color: red;
+# background-color: transparent;
+# text-decoration: underline;
+# }
+
+# .footer {
+# position: fixed;
+# left: 0;
+# bottom: 0;
+# width: 100%;
+# background-color: #74a7c3;
+# color: white;
+# text-align: center;
+# }
+# </style>
+# <div class="footer">
+# <p>Powered by <a style="color:white" href="https://www.snowflake.com/en/" target="_blank">Snowflake</a></p>
+# </div>
+# """
+# st.markdown(footer, unsafe_allow_html=True)
+
+
 
 # connection.close()

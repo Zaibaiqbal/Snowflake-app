@@ -8,7 +8,8 @@ from tempfile import NamedTemporaryFile
 from snowflake.snowpark import FileOperation
 from snowflake.snowpark import FileOperation, Session
 
-
+from footer import generate_footer_html
+from navbar import generate_header_html
 
 conn_param = {
     "user":'atahir',
@@ -34,6 +35,13 @@ cursor.execute("USE WAREHOUSE COMPUTE_WH;")
 cursor.execute("USE DATABASE SNOWFLAKE_APP_DATA;")
 cursor.execute("USE SCHEMA APP;")
 
+
+
+header_html = generate_header_html()
+st.markdown(header_html, unsafe_allow_html=True)
+
+
+st.write("# Data Uploading")
 
 uploaded_file = st.file_uploader("Choose CSV File To Upload")
 if uploaded_file is not None:
@@ -68,3 +76,7 @@ if eo_uploaded_file is not None:
 
         FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@' + stage_nm + '/' + eo_uploaded_file.name)
         st.image(eo_uploaded_file)
+
+
+footer_html = generate_footer_html()
+st.markdown(footer_html, unsafe_allow_html=True)
