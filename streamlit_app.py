@@ -11,6 +11,7 @@ from footer import generate_footer_html
 from navbar import generate_header_html
 from streamlit.components.v1 import components
 import json
+from logo_utils import add_logo
 
 
 conn_param = {
@@ -58,22 +59,7 @@ cursor.execute("USE SCHEMA APP;")
 #         92389273809
 #     ))
 
-
-
-def add_logo():
-    """
-    Add logo to the sidebar, above multipage selection
-    """
-    st.sidebar.image("./unnamed.png", width=250, use_column_width=True)
-    st.sidebar.markdown(
-        "<style>img{position:fixed;top:25px;}</style>", 
-   
-        unsafe_allow_html=True
-    )  
-
-
 add_logo()
-
 
 header_html = generate_header_html()
 st.markdown(header_html, unsafe_allow_html=True)
@@ -86,6 +72,7 @@ st.write("")
 
 st.pydeck_chart(pdk.Deck(
     map_style="mapbox://styles/mapbox/light-v9",
+   
     initial_view_state=pdk.ViewState(
         latitude=37.7749,
         longitude=-122.4194,

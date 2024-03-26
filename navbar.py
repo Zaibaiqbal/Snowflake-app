@@ -14,14 +14,12 @@ def generate_header_html():
             .navbar {{
                 display: flex;
                 justify-content: center;
-                align-items: right;
+                align-items: center;
                 width: 100%;
                 padding: 10px 0;
-                margin: 0;
-                position: fixed;
-                top: 25;
-                left: 110px;
-                right: 0;
+                margin: 0; 
+                position: relative; 
+                top: -40px;
                 z-index: 999;
                 background-color: none; 
             }}
