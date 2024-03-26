@@ -60,8 +60,19 @@ cursor.execute("USE SCHEMA APP;")
 
 
 
-with st.sidebar:
-    st.image("./unnamed.png", width=300)
+def add_logo():
+    """
+    Add logo to the sidebar, above multipage selection
+    """
+    st.sidebar.image("./unnamed.png", width=250, use_column_width=True)
+    st.sidebar.markdown(
+        "<style>img{position:fixed;top:25px;}</style>", 
+   
+        unsafe_allow_html=True
+    )  
+
+
+add_logo()
 
 def add_logo():
     """
