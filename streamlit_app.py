@@ -63,6 +63,25 @@ cursor.execute("USE SCHEMA APP;")
 with st.sidebar:
     st.image("./unnamed.png", width=300)
 
+def add_logo():
+    """
+    Add logo to the sidebar, above multipage selection
+    """
+    st.markdown(
+        """
+        <style>
+            [data-testid="stSidebarNav"] {
+                background-image: url(./unnamed.png);
+                background-repeat: no-repeat;
+                background-position: 20px 20px;
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )        
+
+
+    add_logo()
 
 header_html = generate_header_html()
 st.markdown(header_html, unsafe_allow_html=True)
