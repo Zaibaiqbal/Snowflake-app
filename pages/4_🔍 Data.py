@@ -40,6 +40,9 @@ header_html = generate_header_html()
 st.markdown(header_html, unsafe_allow_html=True)
 
 
+create_stage_sql = f"CREATE OR REPLACE STAGE IOT_data_stage"
+cursor.execute(create_stage_sql)
+
 st.write("# Data Uploading")
 
 uploaded_file = st.file_uploader("Choose CSV File To Upload")
@@ -49,17 +52,27 @@ if uploaded_file is not None:
     df = pd.read_csv(uploaded_file, nrows=1)
     headers = list(df.columns)
 
-    stage_nm = 'demo'
+
+    # Upload data from CSV to the stage
+    put_statement = f"PUT file://{uploaded_file.file} @IOT_data_stage"
+    cursor.execute(put_statement)
+
+
     # Generate CREATE TABLE statement dynamically
     create_table_sql = f"CREATE OR REPLACE TABLE {file_name} ({', '.join([f'{header} STRING' for header in headers])})"
     cursor.execute(create_table_sql)
+
+
+    # Copy data from the stage into the table
+    copy_into_statement = f"COPY INTO {file_name} FROM @IOT_data_stage"
+    cursor.execute(copy_into_statement)
 
     # Load data from CSV into Snowflake
     # put_statement = f"PUT file:///home/gisplus/Downloads/US_MSR_10M/{uploaded_file.name} @%{file_name}"
     # cursor.execute(put_statement)
 
-    copy_into_statement = f"COPY INTO {file_name}"
-    cursor.execute(copy_into_statement)
+    # copy_into_statement = f"COPY INTO {file_name}"
+    # cursor.execute(copy_into_statement)
 
     connection.cursor().close()
 
