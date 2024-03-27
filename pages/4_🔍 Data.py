@@ -50,28 +50,18 @@ if uploaded_file is not None:
     headers = list(df.columns)
 
     stage_nm = 'demo'
+    # Generate CREATE TABLE statement dynamically
+    create_table_sql = f"CREATE OR REPLACE TABLE {file_name} ({', '.join([f'{header} STRING' for header in headers])})"
+    cursor.execute(create_table_sql)
 
-
-    session = Session.builder.configs(conn_param).create()
-    session.sql("use database SNOWFLAKE_APP_DATA").collect()
-    session.sql("CREATE STAGE SNOWFLAKE_APP_DATA.APP.demo;")
-
-    FileOperation(session).put_stream(input_stream=uploaded_file,stage_location='@' + stage_nm + '/' + uploaded_file.name)
-    
-        
-
-    # # Generate CREATE TABLE statement dynamically
-    # create_table_sql = f"CREATE OR REPLACE TABLE {file_name} ({', '.join([f'{header} STRING' for header in headers])})"
-    # cursor.execute(create_table_sql)
-
-    # # Load data from CSV into Snowflake
+    # Load data from CSV into Snowflake
     # put_statement = f"PUT file:///home/gisplus/Downloads/US_MSR_10M/{uploaded_file.name} @%{file_name}"
     # cursor.execute(put_statement)
 
-    # copy_into_statement = f"COPY INTO {file_name}"
-    # cursor.execute(copy_into_statement)
+    copy_into_statement = f"COPY INTO {file_name}"
+    cursor.execute(copy_into_statement)
 
-    # connection.cursor().close()
+    connection.cursor().close()
 
     dataframe = pd.read_csv(uploaded_file)
     st.write(dataframe)
