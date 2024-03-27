@@ -1,5 +1,20 @@
 import streamlit as st
 
+
+
+from logo_utils import add_logo
+add_logo()
+
+
+
+
+
+
+
+
+
+
+
 from footer import generate_footer_html
 from navbar import generate_header_html
 
