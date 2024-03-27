@@ -52,9 +52,15 @@ if uploaded_file is not None:
     df = pd.read_csv(uploaded_file, nrows=1)
     headers = list(df.columns)
 
+    uploaded_file_contents = uploaded_file.read()
+
+    # Create a temporary file in memory and write the uploaded file's contents to it
+    with NamedTemporaryFile(delete=False) as temp_file:
+        temp_file.write(uploaded_file_contents)
+        temp_file_path = temp_file.name
 
     # Upload data from CSV to the stage
-    put_statement = f"PUT file://{uploaded_file.file} @IOT_data_stage"
+    put_statement = f"PUT file://{temp_file_path} @IOT_data_stage"
     cursor.execute(put_statement)
 
 
@@ -78,6 +84,8 @@ if uploaded_file is not None:
 
     dataframe = pd.read_csv(uploaded_file)
     st.write(dataframe)
+
+    os.remove(temp_file_path)
 
 eo_uploaded_file = st.file_uploader("Upload TIFF file", type=["tif", "tiff"])
 if eo_uploaded_file is not None:
