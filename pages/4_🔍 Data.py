@@ -5,7 +5,6 @@ import pandas as pd
 import os
 from PIL import Image
 from tempfile import NamedTemporaryFile
-from snowflake.snowpark import FileOperation
 from snowflake.snowpark import FileOperation, Session
 
 from footer import generate_footer_html

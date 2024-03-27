@@ -66,7 +66,6 @@ st.markdown(header_html, unsafe_allow_html=True)
 
 
 st.write("")
-st.write("")
 
 # Create the map using pydeck
 
