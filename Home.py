@@ -15,21 +15,23 @@ from logo_utils import add_logo
 
 
 conn_param = {
-    "user":'AliTahir',
-    "password":'TestSnowFlake123-',
-    "account":'YLQGJGX-GF89364',
+    "user":'atahir',
+    "password":'AliSnowFlake1$',
+    "account":'YVTQFWQ-WU63006',
     "warehouse":'COMPUTE_WH',
-  
+    "database":'SNOWFLAKE_DATA_APP',
+    "schema":'app',
 }
 
-
 connection = sf.connect(
-    user='AliTahir',
-    password='TestSnowFlake123-',
-    account='YLQGJGX-GF89364',
+    user='atahir',
+    password='AliSnowFlake1$',
+    account='YVTQFWQ-WU63006',
     warehouse='COMPUTE_WH',
-  
+    database='SNOWFLAKE_DATA_APP',
+    schema='app',
 )
+
 
 st.set_page_config(
     page_title="User App",
