@@ -56,9 +56,12 @@ uploaded_file = st.file_uploader("Choose CSV File To Upload")
 if uploaded_file is not None:
     file_name = os.path.splitext(uploaded_file.name)[0]
 
-    df = pd.read_csv(uploaded_file, nrows=1)
+    df = pd.read_csv(uploaded_file)
     headers = list(df.columns)
     
+
+    st.write(df)
+
 
     uploaded_file_contents = uploaded_file.read()
 
@@ -91,8 +94,6 @@ if uploaded_file is not None:
     # cursor.execute(copy_into_statement)
 
 
-    dataframe = pd.read_csv(uploaded_file, delim_whitespace=True )
-    st.write(dataframe)
 
     os.remove(temp_file_path)
 
@@ -109,7 +110,7 @@ if eo_uploaded_file is not None:
 
         FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@EO_data_stage' + '/' + eo_uploaded_file.name)
         
-        
+
         st.image(eo_uploaded_file)
 
 
