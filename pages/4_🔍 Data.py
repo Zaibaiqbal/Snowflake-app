@@ -86,7 +86,7 @@ if uploaded_file is not None:
 
     connection.cursor().close()
 
-    dataframe = pd.read_csv(uploaded_file, encoding='utf-8')
+    dataframe = pd.read_csv(uploaded_file, delim_whitespace=True )
     st.write(dataframe)
 
     os.remove(temp_file_path)
