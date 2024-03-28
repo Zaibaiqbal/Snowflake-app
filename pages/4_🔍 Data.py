@@ -8,7 +8,6 @@ from tempfile import NamedTemporaryFile
 from snowflake.snowpark import FileOperation, Session
 
 from footer import generate_footer_html
-from navbar import generate_header_html
 from logo_utils import add_logo
 
 
