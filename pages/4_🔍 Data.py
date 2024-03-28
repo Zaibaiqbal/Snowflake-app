@@ -33,13 +33,12 @@ connection = sf.connect(
 
 cursor = connection.cursor()
 cursor.execute("USE WAREHOUSE COMPUTE_WH;")
-cursor.execute("CREATE DATABASE SNOWFLAKE_DEMO_APP_DATA IF NOT EXISTS;")
+cursor.execute("CREATE OR REPLACE DATABASE SNOWFLAKE_DEMO_APP_DATA;")
 cursor.execute("USE DATABASE SNOWFLAKE_DEMO_APP_DATA;")
 
-cursor.execute("CREATE SCHEMA APP_SCHEMA IF NOT EXISTS;")
+cursor.execute("CREATE OR REPLACE SCHEMA APP_SCHEMA;")
 
 cursor.execute("USE SCHEMA APP_SCHEMA;")
-
 
 # header_html = generate_header_html()
 # st.markdown(header_html, unsafe_allow_html=True)
