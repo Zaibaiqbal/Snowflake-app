@@ -7,6 +7,7 @@ from PIL import Image
 from tempfile import NamedTemporaryFile
 from snowflake.snowpark import FileOperation, Session
 
+from footer import generate_footer_html
 from logo_utils import add_logo
 
 
@@ -112,3 +113,6 @@ if eo_uploaded_file is not None:
 
         st.image(eo_uploaded_file)
 
+
+footer_html = generate_footer_html()
+st.markdown(footer_html, unsafe_allow_html=True)
