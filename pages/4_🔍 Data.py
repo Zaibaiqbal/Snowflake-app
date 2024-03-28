@@ -13,29 +13,30 @@ from logo_utils import add_logo
 
 
 conn_param = {
-    "user":'atahir',
-    "password":'AliSnowFlake1$',
-    "account":'YVTQFWQ-WU63006',
+    "user":'AliTahir',
+    "password":'TestSnowFlake123-',
+    "account":'YLQGJGX-GF89364',
     "warehouse":'COMPUTE_WH',
-    "database":'SNOWFLAKE_DATA_APP',
-    "schema":'app',
+  
 }
 
 connection = sf.connect(
-    user='atahir',
-    password='AliSnowFlake1$',
-    account='YVTQFWQ-WU63006',
+    user='AliTahir',
+    password='TestSnowFlake123-',
+    account='YLQGJGX-GF89364',
     warehouse='COMPUTE_WH',
-    database='SNOWFLAKE_DATA_APP',
-    schema='app',
+  
 )
 
 
 cursor = connection.cursor()
 cursor.execute("USE WAREHOUSE COMPUTE_WH;")
-cursor.execute("USE DATABASE SNOWFLAKE_APP_DATA;")
-cursor.execute("USE SCHEMA APP;")
+cursor.execute("CREATE DATABASE SNOWFLAKE_DEMO_APP_DATA IF NOT EXISTS;")
+cursor.execute("USE DATABASE SNOWFLAKE_DEMO_APP_DATA;")
 
+cursor.execute("CREATE SCHEMA APP_SCHEMA IF NOT EXISTS;")
+
+cursor.execute("USE SCHEMA APP_SCHEMA;")
 
 
 # header_html = generate_header_html()
@@ -105,9 +106,9 @@ if eo_uploaded_file is not None:
         
 
         session = Session.builder.configs(conn_param).create()
-        session.sql("use database SNOWFLAKE_APP_DATA").collect()
+        session.sql("use database SNOWFLAKE_DEMO_APP_DATA").collect()
 
-        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='SNOWFLAKE_APP_DATA.APP.EO_data_stage/' + eo_uploaded_file.name)
+        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='SNOWFLAKE_DEMO_APP_DATA.APP_SCHEMA.EO_data_stage/' + eo_uploaded_file.name)
         
 
         st.image(eo_uploaded_file)

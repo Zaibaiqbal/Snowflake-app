@@ -15,23 +15,21 @@ from logo_utils import add_logo
 
 
 conn_param = {
-    "user":'atahir',
-    "password":'AliSnowFlake1$',
-    "account":'YVTQFWQ-WU63006',
+    "user":'AliTahir',
+    "password":'TestSnowFlake123-',
+    "account":'YLQGJGX-GF89364',
     "warehouse":'COMPUTE_WH',
-    "database":'SNOWFLAKE_DATA_APP',
-    "schema":'app',
+  
 }
 
-connection = sf.connect(
-    user='atahir',
-    password='AliSnowFlake1$',
-    account='YVTQFWQ-WU63006',
-    warehouse='COMPUTE_WH',
-    database='SNOWFLAKE_DATA_APP',
-    schema='app',
-)
 
+connection = sf.connect(
+    user='AliTahir',
+    password='TestSnowFlake123-',
+    account='YLQGJGX-GF89364',
+    warehouse='COMPUTE_WH',
+  
+)
 
 st.set_page_config(
     page_title="User App",
@@ -45,8 +43,12 @@ st.set_page_config(
 
 cursor = connection.cursor()
 cursor.execute("USE WAREHOUSE COMPUTE_WH;")
-cursor.execute("USE DATABASE SNOWFLAKE_APP_DATA;")
-cursor.execute("USE SCHEMA APP;")
+cursor.execute("CREATE DATABASE SNOWFLAKE_DEMO_APP_DATA IF NOT EXISTS;")
+cursor.execute("USE DATABASE SNOWFLAKE_DEMO_APP_DATA;")
+
+cursor.execute("CREATE SCHEMA APP_SCHEMA IF NOT EXISTS;")
+
+cursor.execute("USE SCHEMA APP_SCHEMA;")
 
 
 # connection.cursor().execute("USE DATABASE COVID19_EPIDEMIOLOGICAL_DATA;")
