@@ -56,6 +56,10 @@ if uploaded_file is not None:
     df = pd.read_csv(uploaded_file, nrows=1)
     headers = list(df.columns)
 
+    dataframe = pd.read_csv(uploaded_file, delim_whitespace=True )
+    st.write(dataframe)
+
+    
     uploaded_file_contents = uploaded_file.read()
 
     # Create a temporary file in memory and write the uploaded file's contents to it
@@ -86,8 +90,6 @@ if uploaded_file is not None:
 
     connection.cursor().close()
 
-    dataframe = pd.read_csv(uploaded_file, delim_whitespace=True )
-    st.write(dataframe)
 
     os.remove(temp_file_path)
 
