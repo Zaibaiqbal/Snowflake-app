@@ -47,6 +47,9 @@ add_logo()
 create_stage_sql = f"CREATE OR REPLACE STAGE IOT_data_stage"
 cursor.execute(create_stage_sql)
 
+create_demo_stage_sql = f"CREATE OR REPLACE STAGE demo"
+cursor.execute(create_demo_stage_sql)
+
 st.write("# Data Uploading")
 
 uploaded_file = st.file_uploader("Choose CSV File To Upload")
@@ -98,9 +101,9 @@ if eo_uploaded_file is not None:
 
         session = Session.builder.configs(conn_param).create()
         session.sql("use database SNOWFLAKE_APP_DATA").collect()
-        session.sql("CREATE STAGE SNOWFLAKE_APP_DATA.APP.demo;")
+        
 
-        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@' + stage_nm + '/' + eo_uploaded_file.name)
+        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@demo'+ '/' + eo_uploaded_file.name)
         
         
         st.image(eo_uploaded_file)
