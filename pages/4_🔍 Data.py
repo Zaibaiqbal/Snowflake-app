@@ -107,7 +107,7 @@ if eo_uploaded_file is not None:
         session = Session.builder.configs(conn_param).create()
         session.sql("use database SNOWFLAKE_APP_DATA").collect()
 
-        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@EO_data_stage' + '/' + eo_uploaded_file.name)
+        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='SNOWFLAKE_APP_DATA.APP.EO_data_stage/' + eo_uploaded_file.name)
         
 
         st.image(eo_uploaded_file)
