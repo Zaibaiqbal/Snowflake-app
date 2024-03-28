@@ -47,6 +47,9 @@ add_logo()
 create_stage_sql = f"CREATE OR REPLACE STAGE IOT_data_stage"
 cursor.execute(create_stage_sql)
 
+create_stage_sql = f"CREATE OR REPLACE STAGE EO_data_stage"
+cursor.execute(create_stage_sql)
+
 st.write("# Data Uploading")
 
 uploaded_file = st.file_uploader("Choose CSV File To Upload")
@@ -55,6 +58,7 @@ if uploaded_file is not None:
 
     df = pd.read_csv(uploaded_file, nrows=1)
     headers = list(df.columns)
+    
 
     uploaded_file_contents = uploaded_file.read()
 
@@ -77,6 +81,8 @@ if uploaded_file is not None:
     copy_into_statement = f"COPY INTO {file_name} FROM @IOT_data_stage"
     cursor.execute(copy_into_statement)
 
+    
+
     # Load data from CSV into Snowflake
     # put_statement = f"PUT file:///home/gisplus/Downloads/US_MSR_10M/{uploaded_file.name} @%{file_name}"
     # cursor.execute(put_statement)
@@ -84,22 +90,24 @@ if uploaded_file is not None:
     # copy_into_statement = f"COPY INTO {file_name}"
     # cursor.execute(copy_into_statement)
 
-    connection.cursor().close()
 
     dataframe = pd.read_csv(uploaded_file, delim_whitespace=True )
     st.write(dataframe)
 
     os.remove(temp_file_path)
 
+    connection.cursor().close()
+
+
 eo_uploaded_file = st.file_uploader("Upload TIFF file", type=["tif", "tiff"])
 if eo_uploaded_file is not None:
-        stage_nm = 'demo'
+        
 
         session = Session.builder.configs(conn_param).create()
         session.sql("use database SNOWFLAKE_APP_DATA").collect()
-        session.sql("CREATE STAGE SNOWFLAKE_APP_DATA.APP.demo;")
+        session.sql("use stage EO_data_stage").collect()
 
-        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@' + stage_nm + '/' + eo_uploaded_file.name)
+        FileOperation(session).put_stream(input_stream=eo_uploaded_file,stage_location='@EO_data_stage' + '/' + eo_uploaded_file.name)
         
         
         st.image(eo_uploaded_file)
