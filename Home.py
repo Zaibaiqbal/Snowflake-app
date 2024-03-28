@@ -61,8 +61,8 @@ cursor.execute("USE SCHEMA APP;")
 
 add_logo()
 
-header_html = generate_header_html()
-st.markdown(header_html, unsafe_allow_html=True)
+# header_html = generate_header_html()
+# st.markdown(header_html, unsafe_allow_html=True)
 
 
 st.write("")
@@ -77,6 +77,8 @@ st.pydeck_chart(pdk.Deck(
         longitude=-122.4194,
         zoom=10,
         pitch=50,
+        height=650,
+         width=700
     )
 ), use_container_width=True)
 

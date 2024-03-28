@@ -9,6 +9,8 @@ from snowflake.snowpark import FileOperation, Session
 
 from footer import generate_footer_html
 from navbar import generate_header_html
+from logo_utils import add_logo
+
 
 conn_param = {
     "user":'atahir',
@@ -36,8 +38,10 @@ cursor.execute("USE SCHEMA APP;")
 
 
 
-header_html = generate_header_html()
-st.markdown(header_html, unsafe_allow_html=True)
+# header_html = generate_header_html()
+# st.markdown(header_html, unsafe_allow_html=True)
+
+add_logo()
 
 
 create_stage_sql = f"CREATE OR REPLACE STAGE IOT_data_stage"
@@ -82,7 +86,7 @@ if uploaded_file is not None:
 
     connection.cursor().close()
 
-    dataframe = pd.read_csv(uploaded_file)
+    dataframe = pd.read_csv(uploaded_file, encoding='utf-8')
     st.write(dataframe)
 
     os.remove(temp_file_path)
