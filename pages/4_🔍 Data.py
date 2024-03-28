@@ -53,7 +53,7 @@ uploaded_file = st.file_uploader("Choose CSV File To Upload")
 if uploaded_file is not None:
     file_name = os.path.splitext(uploaded_file.name)[0]
 
-    df = pd.read_csv(uploaded_file, nrows=1)
+    df = pd.read_csv(uploaded_file)
     headers = list(df.columns)
 
     st.write(df)
